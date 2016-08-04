@@ -103,7 +103,7 @@ function deg2rad(deg) {
 }
 
 function getMapFromPostcodeAndDistance(postcode, distance) {
-  return $.getJSON("http://api.postcodes.io/postcodes/" + postcode)
+  return $.getJSON("https://api.postcodes.io/postcodes/" + postcode)
   .done(function (data) {
     var lat = data.result.latitude;
     var long = data.result.longitude; 

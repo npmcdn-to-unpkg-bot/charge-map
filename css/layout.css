@@ -6,22 +6,22 @@ body {
 }
 
 #mapid { 
-	height: 50vh;
+	height: 60vh;
   width: 100%;
   border-bottom: 10px solid black;
 }
 
 #chart {
-  height: 400px;
+  height: 300px;
   width: 600px;
   position: absolute;
   float: right;
-  margin-top: -100px;
+  margin-top: -150px;
 
 }
 
 .info {
-  height: 40vh;
+  height: 30vh;
   padding: 2vw;
   position: relative;
 }
