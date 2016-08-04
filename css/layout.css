@@ -1,4 +1,26 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,300);
+
+body {
+  font-family: Helvetica, 'Open Sans', sans-serif;
+  margin: 0;
+}
+
 #mapid { 
 	height: 50vh;
-  margin: 3vh; 
+  border-bottom: 10px solid black;
+}
+
+.info {
+  padding: 2vw;
+}
+
+.info__count {
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 36px;
+}
+.info__subtitle {
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 24px;
 }
