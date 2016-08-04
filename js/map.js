@@ -1,5 +1,4 @@
 var mymap;
-var chargecircles = [];
 
 $(document).ready(function() {
   var lat1 = 51.521130;
@@ -28,6 +27,7 @@ function displayChargePoints(mymap, latMid, longMid, maxDist) {
   .done(function (data) {
     var count = 0;
     var chargepoints = data.ChargeDevice;
+    var chargecircles = [];
     $.each(chargepoints, function (index, item) {
       var lat = item.ChargeDeviceLocation.Latitude;
       var long = item.ChargeDeviceLocation.Longitude;
@@ -43,7 +43,11 @@ function displayChargePoints(mymap, latMid, longMid, maxDist) {
         circle.bindPopup(item.ChargeDeviceName + "<br/>" + item.LocationType);
       }
     });
+    var group = new L.featureGroup(chargecircles);
+    mymap.fitBounds(group.getBounds());
+    console.log(group);
     $('.info__count').html(count + ' chargepoints');
+    $('.info__subtitle').html('Within ' + maxDist + 'km');
   });
 };
 
@@ -64,4 +68,16 @@ function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
 
 function deg2rad(deg) {
   return deg * (Math.PI/180)
+}
+
+function getMapFromPostcodeAndDistance(postcode, distance) {
+  return $.getJSON("http://api.postcodes.io/postcodes/" + postcode)
+  .done(function (data) {
+    var lat = data.result.latitude;
+    var long = data.result.longitude; 
+    console.log(lat, long);
+
+    mymap.remove();
+    initMap(lat, long, distance);
+  });
 }
