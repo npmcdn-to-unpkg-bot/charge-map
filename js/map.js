@@ -1,11 +1,19 @@
 var mymap;
+var postcode;
+var distance;
+var marker;
 
 $(document).ready(function() {
-  var lat1 = 51.521130;
-  var long1 = -0.077916;
-  var dist = 1;
+  distance = 1;
+  postcode = 'E1 6PL';
+  $('#km').val(distance);
+  $('#postcode').val(postcode);
   
-  initMap(lat1, long1, dist)
+  getMapFromPostcodeAndDistance(postcode, 1);
+
+  $('.button').click(function() {
+    getMapFromPostcodeAndDistance($('#postcode').val(), $('#km').val());
+  });
 });
 
 function initMap(lat, long, dist) {
@@ -16,7 +24,7 @@ function initMap(lat, long, dist) {
       maxZoom: 18,
   }).addTo(mymap);
 
-  var marker = L.marker([lat, long]).addTo(mymap);
+  marker = L.marker([lat, long]).addTo(mymap);
   marker.bindPopup("Unboxed");
 
   displayChargePoints(mymap, lat, long, dist);
@@ -43,11 +51,11 @@ function displayChargePoints(mymap, latMid, longMid, maxDist) {
         circle.bindPopup(item.ChargeDeviceName + "<br/>" + item.LocationType);
       }
     });
+    chargecircles.push(marker);
     var group = new L.featureGroup(chargecircles);
     mymap.fitBounds(group.getBounds());
-    console.log(group);
     $('.info__count').html(count + ' chargepoints');
-    $('.info__subtitle').html('Within ' + maxDist + 'km');
+    // $('.info__subtitle').html('Within ' + maxDist + 'km of ' + postcode);
   });
 };
 
@@ -75,9 +83,10 @@ function getMapFromPostcodeAndDistance(postcode, distance) {
   .done(function (data) {
     var lat = data.result.latitude;
     var long = data.result.longitude; 
-    console.log(lat, long);
 
-    mymap.remove();
+    if (mymap) {
+      mymap.remove();    
+    }
     initMap(lat, long, distance);
   });
 }
