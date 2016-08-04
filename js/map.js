@@ -14,6 +14,8 @@ $(document).ready(function() {
   $('.button').click(function() {
     getMapFromPostcodeAndDistance($('#postcode').val(), $('#km').val());
   });
+
+  piechart();
 });
 
 function initMap(lat, long, dist) {
@@ -34,8 +36,10 @@ function displayChargePoints(mymap, latMid, longMid, maxDist) {
   return $.getJSON("json/chargepoints.json")
   .done(function (data) {
     var count = 0;
+    var onstreet_count = 0;
     var chargepoints = data.ChargeDevice;
     var chargecircles = [];
+    var connectors_list = [];
     $.each(chargepoints, function (index, item) {
       var lat = item.ChargeDeviceLocation.Latitude;
       var long = item.ChargeDeviceLocation.Longitude;
@@ -49,13 +53,33 @@ function displayChargePoints(mymap, latMid, longMid, maxDist) {
         }).addTo(mymap);
         chargecircles.push(circle);
         circle.bindPopup(item.ChargeDeviceName + "<br/>" + item.LocationType);
+        if (item.LocationType == "On-street" || item.OnStreetFlag) {
+          onstreet_count++;
+        }
+        var connectors = item.Connector;
+        $.each(connectors, function(index, item) {
+          connectors_list.push(item);
+        });
       }
     });
+    var connectors_string = [];
+    $.each(connectors_list, function(item) {
+      var line = '';
+      line += connectors_list[item].ConnectorType;
+      connectors_string.push(line);
+    });
+    var counts = {};
+    connectors_string.forEach(function(x) { counts[x] = (counts[x] || 0)+1; });
+    var counts_arr = []
+    $.each(counts, function (type, count) {
+      counts_arr.push([type, count]);
+    });
+    piechart(counts_arr);
     chargecircles.push(marker);
     var group = new L.featureGroup(chargecircles);
     mymap.fitBounds(group.getBounds());
     $('.info__count').html(count + ' chargepoints');
-    // $('.info__subtitle').html('Within ' + maxDist + 'km of ' + postcode);
+    $('.onstreet').html(onstreet_count + ' on-street chargepoints');
   });
 };
 

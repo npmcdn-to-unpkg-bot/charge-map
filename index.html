@@ -6,12 +6,16 @@
   <link rel="stylesheet" href="css/layout.css" />
 	<script src="https://npmcdn.com/leaflet@0.7.7/dist/leaflet.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link href="css/c3.css" rel="stylesheet" type="text/css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js" charset="utf-8"></script>
+  <script src="js/c3.min.js"></script>
+  <script src="js/piechart.js"></script>
   <script src="js/map.js"></script>
 </head>
 
 <body>
-   <div id="mapid"></div>
-   <div class="info">
+  <div id="mapid"></div>
+  <div class="info">
     <div class="info__count">
     </div>
     <div class="info__subtitle">
@@ -19,8 +23,14 @@
       <form>
         <input id="km" type="text" name="distance" placeholder="1">km of<input id="postcode" type="text" name="postcode" placeholder="E1 6PL">
       </form>
-   </div>
-   <div class="button">
-    Update Map
-   </div>
+    </div>
+    <div class="info__stats">
+      <div class="onstreet">
+      </div>
+    </div>
+    <div id="chart"></div>  
+    <div class="button">
+      Update Map
+    </div>
+  </div>
 </body>

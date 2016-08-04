@@ -7,7 +7,17 @@ body {
 
 #mapid { 
 	height: 50vh;
+  width: 100%;
   border-bottom: 10px solid black;
+}
+
+#chart {
+  height: 400px;
+  width: 600px;
+  position: absolute;
+  float: right;
+  margin-top: -100px;
+
 }
 
 .info {
@@ -21,10 +31,19 @@ body {
   font-weight: 600;
   font-size: 36px;
 }
+
 .info__subtitle {
   margin-top: 10px;
   font-weight: 600;
   font-size: 24px;
+}
+
+.info__stats {
+  margin-top: 50px;
+}
+
+.onstreet { 
+  font-size: 18px;
 }
 
 form {
