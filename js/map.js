@@ -33,7 +33,7 @@ function initMap(lat, long, dist) {
   }).addTo(mymap);
 
   marker = L.marker([lat, long]).addTo(mymap);
-  marker.bindPopup("Unboxed");
+  marker.bindPopup("Your location");
 
   displayChargePoints(mymap, lat, long, dist);
 }
@@ -58,7 +58,12 @@ function displayChargePoints(mymap, latMid, longMid, maxDist) {
           fillOpacity: 0.5
         }).addTo(mymap);
         chargecircles.push(circle);
-        circle.bindPopup(item.ChargeDeviceName + "<br/>" + item.LocationType);
+        var string = '<br/><br/>Connectors:<ul>';
+        $.each(item.Connector, function(i, c) {
+          string += ('<li>' + c.ConnectorType + '</li>')
+        });
+        string += '</ul>';
+        circle.bindPopup("<strong>" + item.ChargeDeviceName + "</strong><br/>Location Type: " + item.LocationType + "<br/>Device Network: " + item.DeviceNetworks + string);
         if (item.LocationType == "On-street" || item.OnStreetFlag) {
           onstreet_count++;
         }
