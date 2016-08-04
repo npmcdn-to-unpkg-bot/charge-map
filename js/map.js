@@ -15,6 +15,12 @@ $(document).ready(function() {
     getMapFromPostcodeAndDistance($('#postcode').val(), $('#km').val());
   });
 
+  $(document).keypress(function(e) {
+    if(e.which == 13) {
+      getMapFromPostcodeAndDistance($('#postcode').val(), $('#km').val());
+    }
+  });
+
   piechart();
 });
 
